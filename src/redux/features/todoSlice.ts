@@ -14,13 +14,15 @@ export const todoSlice = createSlice({
     reducers: {
         addTodo: (state, action: PayloadAction<TodoItem>) => {
             return produce(state, draftState => {
-                draftState.todoItems.push(action.payload);
-                draftState.todoItems.sort((a, b) => {
-                    if (a.check === b.check) {
-                        return a.name.localeCompare(b.name);
-                    }
-                    return a.check ? 1 : -1;
-                });
+                if(action.payload.name.trim()!==''){
+                    draftState.todoItems.push(action.payload);
+                    draftState.todoItems.sort((a, b) => {
+                        if (a.check === b.check) {
+                            return a.name.localeCompare(b.name);
+                        }
+                        return a.check ? 1 : -1;
+                    });
+                }
             });
         },
         removeTodo: (state, action: PayloadAction<string>) => {
